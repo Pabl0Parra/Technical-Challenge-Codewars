@@ -1,49 +1,32 @@
 const getSummary = (transactions, threshold) =>
+  // spread operator to create a new array that doesn´t mutate the original
   [
     ...transactions
+      // reduce list of transactions into a Map, using category as key & sum of amount values as total
       .reduce(
         (acc, { category, amount }) =>
           acc.set(category, (acc.get(category) ?? 0) + amount),
         new Map()
       )
+      // so it doess it for each entrie or transaction
       .entries(),
   ]
+    // map them into objects with category & total as key-value pair
     .map(([category, total]) => ({ category, total }))
+    // filter the results as requested
     .filter(({ total }) => threshold == null || total >= threshold)
+    // sort them by total value in descending order, then category
     .sort(
       ({ total: at, category: ac }, { total: bt, category: bc }) =>
         bt - at || ac.localeCompare(bc)
-    ) // Sort by total, then category
-    .slice(0, threshold == null ? 3 : undefined); // Slice to 3
+    )
+    // if threshold is missing, output must be limited to 3 summary objects
+    .slice(0, threshold == null ? 3 : undefined);
 
-const { expect } = chai;
-mocha.setup("bdd");
-chai.should();
+///****** Add to comments - notes *****************
 
-describe("getSummary", () => {
-  const transactions = [
-    { category: "food", amount: 30 },
-    { category: "fuel", amount: 40 },
-    { category: "transport", amount: 10 },
-    { category: "holidays", amount: 50 },
-    { category: "entertainment", amount: 20 },
-  ];
-
-  it("returns top spending categories on or above the threshold", () => {
-    expect(getSummary(transactions, 30)).to.eql([
-      { category: "holidays", total: 50 },
-      { category: "fuel", total: 40 },
-      { category: "food", total: 30 },
-    ]);
-  });
-
-  it("returns top three spending categories if threshold is missing", () => {
-    expect(getSummary(transactions)).to.eql([
-      { category: "holidays", total: 50 },
-      { category: "fuel", total: 40 },
-      { category: "food", total: 30 },
-    ]);
-  });
-});
-
-mocha.run();
+// 1. Reduce list of transactions into a Map by using the "category" as a key & the sum of the "amount" values as the total.
+// 2. Once we have a Map, we can grab the entries, map them into objects with a "category" & "total" key-value pair.
+// 3. Filter the objects by their "total" as it compares to the " threshold". If no threshold, show all transactions. If threshold --> show only those transactions which ar above or equal to the threshold.
+// 4. Sort them by total (descending), as instructed.
+// 5. Slice the result to return top three spending categories if threshold is missing or return undefined.
