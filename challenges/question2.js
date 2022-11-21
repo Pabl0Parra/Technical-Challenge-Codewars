@@ -5,7 +5,7 @@ export function filterTypes(values) {
     object: [],
     others: [],
   };
-
+  // for-of loop to iterate through all cases & push values to the correct type
   for (const value of values) {
     switch (typeof value) {
       case "number":
@@ -15,7 +15,7 @@ export function filterTypes(values) {
         result.string.push(value);
         break;
       case "object":
-        // null is a falsy object so if null --> push to others
+        // null is a falsy object so if null --> push to others, otherwise push to object
         value === null ? result.others.push(value) : result.object.push(value);
         break;
       default:
