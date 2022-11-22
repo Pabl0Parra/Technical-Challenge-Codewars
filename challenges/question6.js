@@ -1,16 +1,16 @@
 import { saveOne } from "./helper";
 
 export async function saveAll(records) {
-  // empty array to store the rejects
+  // initialize empty fails array
   const fails = [];
   // iterate the array
   for (const record of records) {
     try {
-      // await the successes
+      // returns an empty list if all records were saved
       await saveOne(record);
       // catch errors
     } catch (e) {
-      // push errors into fails array by id
+      // list of ids of records that failed to save
       fails.push(record.id);
     }
   }
