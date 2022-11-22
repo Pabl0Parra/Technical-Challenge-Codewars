@@ -26,3 +26,30 @@ export function filterTypes(values) {
 
   return result;
 }
+
+// B- *****A shorter way w/out the switch*****
+function filterTypes(values) {
+  const result = {number: [], string: [], object: [], others: []};
+  for(const value of values) {
+    const type = typeof value;
+    const key = value === null || !Object.hasOwn(result, type) ? "others" : type;
+    result[key].push(value);
+  }
+
+  return result;
+// }
+
+// B-EXPLANATION -- Since the keys of the object match the string value I egt when I use typeOf, I ccan use the result of calling typeof on each value to determine the key I want to push to. I can add some expectations such as if the value is null to use "others" as key instead of "object".
+// If the "typeof" value isn´t in the result "object" that I´m building, choose "other" (I´ve used "Object.hasOwn() to check if the type is in the object")
+
+
+
+
+// **** Using the reduce method (harder to read IMO) ****
+const filterTypes = values => values.reduce((acc, value) => {
+  const type = typeof value;
+  const key = value === null || !Object.hasOwn(acc, type) ? "others" : type;
+  return {...acc, [key]: [...acc[key], value]};
+}, {number: [], string: [], object: [], others: []});
+
+// // C-EXPLANATION -- using the .reduce() method. I´m building up an accumulated object with the spread syntax(...) which is returned from the reduce callback, that also has an updated "key" value to hold a new array with the current value. It uses the given result variable as the initial values for the reduce method 
