@@ -10,7 +10,7 @@ export async function saveAll(records) {
       await saveOne(record);
       // catch errors
     } catch (e) {
-      // list of ids of records that failed to save
+      // returns list of ids of records that failed to save
       fails.push(record.id);
     }
   }
