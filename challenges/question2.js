@@ -39,7 +39,7 @@ function filterTypes(values) {
   return result;
 // }
 
-// B-EXPLANATION -- Since the keys of the object match the string value I egt when I use typeOf, I ccan use the result of calling typeof on each value to determine the key I want to push to. I can add some expectations such as if the value is null to use "others" as key instead of "object".
+// B-EXPLANATION -- Since the keys of the object match the string value I get when I use typeOf, I can use the result of calling typeof on each value to determine the key I want to push to. I can add some expectations such as if the value is null to use "others" as key instead of "object".
 // If the "typeof" value isn´t in the result "object" that I´m building, choose "other" (I´ve used "Object.hasOwn() to check if the type is in the object")
 
 
