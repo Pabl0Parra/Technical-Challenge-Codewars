@@ -1,5 +1,5 @@
 export function mergeArrays(array1, array2) {
-  // The reduce() function iterates through each item in the array, and for each item it calls a second function, (acc, b), which takes two arguments: the current accumulator value and the current item.
+  // The reduce() function iterates through each item in the array, and for each item it calls a callback function, (acc, b), which takes two arguments: the current accumulator value and the current item.
   return array1.reduce((acc, b) => {
     // finds the index of the item in array1 that has the same Id as the current item in array2, and assigns that index to the variable index.
     const index = acc.findIndex((item) => item.Id === b.Id);
